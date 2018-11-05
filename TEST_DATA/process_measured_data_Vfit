@@ -1,0 +1,62 @@
+# Control process for calculating equivalent circuit models which reproduce
+# frequency domain transfer functions provided as tabulated data: frequency Re{H} Im{H}
+#
+# The process is as follows:
+# 1. Vfit: Fit a pole-zero filter function to the complex data using
+#                        the vector fitting process
+# 2. ../bin/network_synthesis: Create a passive circuit model whose impedance is the transfer function provided.
+#                               The circuit model is provided as a Spice sub-circuit
+# 3. Run Spice to calculate the impedance of the circuit model for comparison with the input data
+# 4. Plot the comparison data
+
+# Check that we have both a name and a model order (2 parameters)
+if [ "$#" = "2" ] ; then
+
+NAME=$1
+ORDER=$2
+
+else
+
+  echo "run as follows:
+  process_measured_data NAME model_order "
+  exit 1
+  
+fi
+
+MAX_ITS=10
+
+cp $NAME input_impedance_data.dat
+
+echo "input_impedance_data.dat
+$ORDER
+$MAX_ITS
+" > Vfit_in.txt
+
+~/VECTOR_FIT/VECTOR_FIT/SRC/Vfit < Vfit_in.txt
+
+FILTER_NAME=$NAME.filter
+
+cp Vfit.filter $NAME.filter
+
+echo "
+_________________________________________
+
+RUNNING TEST CASE: $FILTER_NAME 
+_________________________________________
+
+"
+../bin/network_synthesis $FILTER_NAME
+
+# Check whether the process has completed correctly
+
+read CHECK < run_status
+if [ "$CHECK" != "network_synthesis:Finished_Correctly" ]; then
+# We need to organise the logic here such that the test case fails and
+# the system goes on to the next test case
+  exit 1
+fi
+
+ngspice -b ngspice_circuit.cir -o spice_result.fout
+
+
+gnuplot comp_plot_Vfit.plt
