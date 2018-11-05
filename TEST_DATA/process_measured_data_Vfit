@@ -4,10 +4,13 @@
 # The process is as follows:
 # 1. Vfit: Fit a pole-zero filter function to the complex data using
 #                        the vector fitting process
-# 2. ../bin/network_synthesis: Create a passive circuit model whose impedance is the transfer function provided.
+# 2. network_synthesis: Create a passive circuit model whose impedance is the transfer function provided.
 #                               The circuit model is provided as a Spice sub-circuit
 # 3. Run Spice to calculate the impedance of the circuit model for comparison with the input data
 # 4. Plot the comparison data
+#
+# Note that Vfit, network_synthesis and ngspice will need to be in your path of the path must be specified in this script.
+#
 
 # Check that we have both a name and a model order (2 parameters)
 if [ "$#" = "2" ] ; then
@@ -32,7 +35,7 @@ $ORDER
 $MAX_ITS
 " > Vfit_in.txt
 
-~/VECTOR_FIT/VECTOR_FIT/SRC/Vfit < Vfit_in.txt
+Vfit < Vfit_in.txt
 
 FILTER_NAME=$NAME.filter
 
@@ -45,7 +48,7 @@ RUNNING TEST CASE: $FILTER_NAME
 _________________________________________
 
 "
-../bin/network_synthesis $FILTER_NAME
+network_synthesis $FILTER_NAME
 
 # Check whether the process has completed correctly
 
@@ -57,6 +60,5 @@ if [ "$CHECK" != "network_synthesis:Finished_Correctly" ]; then
 fi
 
 ngspice -b ngspice_circuit.cir -o spice_result.fout
-
 
 gnuplot comp_plot_Vfit.plt
