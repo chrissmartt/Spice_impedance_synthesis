@@ -1,6 +1,7 @@
 rm *.CSV.*
 rm *.dat
 rm *.fout
-rm  data_pre_process
-rm filter_reformat
 rm *_in.txt
+rm Vfit.filter
+rm run_status
+rm *.cir

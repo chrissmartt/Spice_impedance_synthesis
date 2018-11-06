@@ -35,7 +35,7 @@ $ORDER
 $MAX_ITS
 " > Vfit_in.txt
 
-Vfit < Vfit_in.txt
+~/VECTOR_FIT/SRC/Vfit < Vfit_in.txt
 
 FILTER_NAME=$NAME.filter
 
@@ -48,7 +48,7 @@ RUNNING TEST CASE: $FILTER_NAME
 _________________________________________
 
 "
-network_synthesis $FILTER_NAME
+~/NETWORK_SYNTHESIS/bin/network_synthesis $FILTER_NAME
 
 # Check whether the process has completed correctly
 

@@ -1,6 +1,3 @@
-cd SRC
-make clean
-cd ..
 cd TEST_DATA
 clean_before_repository_update
 cd ..
