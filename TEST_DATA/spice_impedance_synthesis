@@ -9,8 +9,7 @@
 # 3. Run Spice to calculate the impedance of the circuit model for comparison with the input data
 # 4. Plot the comparison data
 #
-# Note that Vfit, network_synthesis and ngspice will need to be in your path of the path must be specified in this script.
-#
+# Note that Vfit, network_synthesis and ngspice will need to be in your path or the path must be specified in this script.
 
 # Check that we have both a name and a model order (2 parameters)
 if [ "$#" = "2" ] ; then
@@ -21,11 +20,20 @@ ORDER=$2
 else
 
   echo "run as follows:
-  process_measured_data NAME model_order "
+  process_measured_data NAME model_order 
+  example:
+  spice_impedance_synthesis CAPACITOR_Z_measured_plus_LF_model.CSV 6"
   exit 1
   
 fi
 
+# SET EXECUTABLE NAMES FOR VECTOR_FIT AND NETWORK_SYNTHEIS INCLUDING PATHS
+
+VECTOR_FIT=~/VECTOR_FIT/bin/Vfit
+
+NETWORK_SYNTHESIS=~/NETWORK_SYNTHESIS/bin/network_synthesis
+
+# SET THE NUMBER OF ITERATIONS IN THE VECTOR_FIT PROCESS
 MAX_ITS=10
 
 cp $NAME input_impedance_data.dat
@@ -35,7 +43,7 @@ $ORDER
 $MAX_ITS
 " > Vfit_in.txt
 
-~/VECTOR_FIT/SRC/Vfit < Vfit_in.txt
+$VECTOR_FIT < Vfit_in.txt
 
 FILTER_NAME=$NAME.filter
 
@@ -48,7 +56,8 @@ RUNNING TEST CASE: $FILTER_NAME
 _________________________________________
 
 "
-~/NETWORK_SYNTHESIS/bin/network_synthesis $FILTER_NAME
+
+$NETWORK_SYNTHESIS $FILTER_NAME
 
 # Check whether the process has completed correctly
 

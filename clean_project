@@ -1,4 +1,7 @@
 cd TEST_DATA
 clean_before_repository_update
 cd ..
+cd DOCUMENTATION
+make clean
+cd ..
 

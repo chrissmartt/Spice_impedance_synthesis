@@ -1,12 +1,6 @@
-\section{Section}\label{introduction}
+\section{Introduction}\label{introduction}
 
+This document describes the process and software implemented to synthesise Spice sub-circuit models of complex impedance functions specified in the frequency domain. The project uses two processes to create a Spice circuit model from complex impedance data, firstly the vector fitting process \cite{vectror_fit} is used to develop a rational function fit to the input data in pole-residue format. The network synthesis process \cite{network_synthesis} then derives a Spice sub-circuit model which reproduces the impedance of the pole-residue model fit.  
 
-This document describes the process and software implemented to synthesise Spice sub-circuit models of complex impedance functions specified in the frequency domain.
-
-Section \ref{spice_impedance_synthesis} describes the process of Spice imepdance synthesis.
-
-Section \ref{software} describes the software.
-
-Section \ref{examples} describes some examples.
-
-
+The software in this project consists of a unix shell script which calls the vector fit and network synthesis processes in turn, then runs Ngspice to calculate the impedance of the resulting Spice sub-circuit model. The comparison between the input data, vector fit model and Spice circuit model are then plotted so that the accuracy of the Spice circuit model fit can be assessed.
+ 

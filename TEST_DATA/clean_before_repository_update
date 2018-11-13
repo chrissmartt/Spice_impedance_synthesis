@@ -5,3 +5,4 @@ rm *_in.txt
 rm Vfit.filter
 rm run_status
 rm *.cir
+rm *.lib

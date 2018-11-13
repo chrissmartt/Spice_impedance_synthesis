@@ -11,5 +11,8 @@ spice_impedance_synthesis_manual.pdf: spice_impedance_synthesis.tex  $(LATEX_FIL
 	pdflatex spice_impedance_synthesis.tex 
 
 clean:
+	rm -f *.aux *.lof *.log  *.out  *.toc 
+
+clean_all:
 	rm -f *.aux *.lof *.log  *.out  *.toc *.pdf
 
