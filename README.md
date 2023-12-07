@@ -10,4 +10,6 @@ complex frequency domain impedance data for one port devices.
 A typical application would be developing high frequency models of real components 
 based on measured impedance data. These models then include the parasitic elements 
 which represent the component behaviour at frequencies beyond the range for which 
-they can be considered to be 'ideal' components. 
+they can be considered to be 'ideal' components.
+
+
